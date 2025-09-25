@@ -15,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -40,6 +41,8 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
+
+        System.out.println("LOGGING IN");
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -61,6 +64,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
+    @Transactional
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         Map<String, String> response = new HashMap<>();
 
@@ -88,6 +92,7 @@ public class AuthController {
     }
 
     @PostMapping("/make-admin/{username}")
+    @Transactional
     public ResponseEntity<?> makeUserAdmin(@PathVariable String username) {
         Map<String, String> response = new HashMap<>();
         
@@ -106,6 +111,7 @@ public class AuthController {
     }
 
     @PostMapping("/init-admin")
+    @Transactional
     public ResponseEntity<?> initializeAdmin() {
         Map<String, String> response = new HashMap<>();
         

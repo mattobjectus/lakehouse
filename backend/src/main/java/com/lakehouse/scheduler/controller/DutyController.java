@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -70,6 +71,7 @@ public class DutyController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
+    @Transactional
     public ResponseEntity<?> createDuty(@Valid @RequestBody DutyRequest request) {
         Map<String, String> response = new HashMap<>();
         
@@ -82,6 +84,7 @@ public class DutyController {
 
     @PostMapping("/{dutyId}/assign")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @Transactional
     public ResponseEntity<?> assignDuty(@PathVariable Long dutyId, @Valid @RequestBody AssignmentRequest request, Authentication authentication) {
         Map<String, String> response = new HashMap<>();
                 
@@ -108,6 +111,7 @@ public class DutyController {
 
     @PutMapping("/assignments/{id}/complete")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @Transactional
     public ResponseEntity<?> completeAssignment(@PathVariable Long id, Authentication authentication) {
         Map<String, String> response = new HashMap<>();
         

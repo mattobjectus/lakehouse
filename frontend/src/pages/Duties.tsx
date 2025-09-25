@@ -9,6 +9,7 @@ import {
   Chip,
 } from "@mui/material";
 import axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
 
 interface Duty {
   id: number;
@@ -33,15 +34,27 @@ interface DutyAssignment {
 const Duties: React.FC = () => {
   const [duties, setDuties] = useState<Duty[]>([]);
   const [assignments, setAssignments] = useState<DutyAssignment[]>([]);
+  const { token } = useAuth();
 
   useEffect(() => {
-    fetchDuties();
-    fetchAssignments();
-  }, []);
+    if (token) {
+      fetchDuties();
+      fetchAssignments();
+    }
+  }, [token]);
+
+  const getAuthHeaders = () => ({
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   const fetchDuties = async () => {
     try {
-      const response = await axios.get("http://localhost:8082/api/duties");
+      const response = await axios.get(
+        "http://localhost:8082/api/duties",
+        getAuthHeaders()
+      );
       setDuties(response.data);
     } catch (error) {
       console.error("Error fetching duties:", error);
@@ -51,7 +64,8 @@ const Duties: React.FC = () => {
   const fetchAssignments = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8082/api/duties/assignments"
+        "http://localhost:8082/api/duties/assignments",
+        getAuthHeaders()
       );
       setAssignments(response.data);
     } catch (error) {
@@ -61,10 +75,14 @@ const Duties: React.FC = () => {
 
   const handleSignUp = async (dutyId: number) => {
     try {
-      await axios.post(`http://localhost:8082/api/duties/${dutyId}/assign`, {
-        assignedDate: new Date().toISOString().split("T")[0],
-        notes: "",
-      });
+      await axios.post(
+        `http://localhost:8082/api/duties/${dutyId}/assign`,
+        {
+          assignedDate: new Date().toISOString().split("T")[0],
+          notes: "",
+        },
+        getAuthHeaders()
+      );
       fetchAssignments();
     } catch (error) {
       console.error("Error signing up for duty:", error);

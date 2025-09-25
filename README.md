@@ -1,6 +1,7 @@
-# Lakehouse Scheduler
+# Lakehouse
 
 A comprehensive full-stack web application for managing lakehouse reservations, duty assignments, and user administration. Built with Spring Boot backend and React TypeScript frontend.
+This has been developed with guided AI interactions. Overall this is going well with limited involvement in debugging and coding when things get non-obvious or have complex rules.
 
 ## 🏗️ Architecture Overview
 

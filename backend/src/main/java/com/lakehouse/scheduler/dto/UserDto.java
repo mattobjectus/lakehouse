@@ -12,6 +12,8 @@ public class UserDto {
     private User.Role role;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String password; // For create/update operations
+    private String confirmPassword; // For validation
 
     public UserDto() {}
 
@@ -89,5 +91,21 @@ public class UserDto {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

@@ -16,7 +16,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#1976d2",
+      main: "#003060ff",
     },
     secondary: {
       main: "#dc004e",
